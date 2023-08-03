@@ -1,21 +1,21 @@
-# from urllib.parse import urlparse
-#
-# url = 'https://bit.ly/3KuFXqv'
-# parsed = urlparse(url)
-# print(parsed.netloc+parsed.path)
 import requests
+from dotenv import load_dotenv
+import os
 
-def is_bitlink(url):
+load_dotenv()
+token = os.environ['TOKEN']
+
+def is_bitlink(url, token):
     url = f"https://api-ssl.bitly.com/v4/bitlinks/{url}"
     headers = {
-        "Authorization": "Bearer a649aa3e3ce528d1d3f42b594cbff90731a0d0ba",
+        "Authorization": token,
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     print(response.text)
 a = 'bit.ly/3KuFXqv'
-b = 'pymotw.com/3/urllib.parse/index.html'
-is_bitlink(b)
+
+is_bitlink(a, token)
 
 
 
@@ -23,3 +23,10 @@ is_bitlink(b)
 
 # https://pymotw.com/3/urllib.parse/index.html
 # https://bit.ly/3KuFXqv
+
+
+# from urllib.parse import urlparse
+#
+# url = 'https://bit.ly/3KuFXqv'
+# parsed = urlparse(url)
+# print(parsed.netloc+parsed.path)
