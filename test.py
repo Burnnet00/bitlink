@@ -1,3 +1,8 @@
+import json
+import requests
+from urllib.parse import urlparse
+from dotenv import load_dotenv
+import os
 import requests
 from dotenv import load_dotenv
 import os
@@ -5,17 +10,31 @@ import os
 load_dotenv()
 token = os.environ['TOKEN']
 
-def is_bitlink(url, token):
-    url = f"https://api-ssl.bitly.com/v4/bitlinks/{url}"
+def count_clicks(token, link):
+    url = f"https://api-ssl.bitly.com/v4/bitlinks/{link}/clicks/summary"
     headers = {
         "Authorization": token,
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-    print(response.text)
-a = 'bit.ly/3KuFXqv'
+    clicks_count = response.text
+    dict_count = json.loads(clicks_count)["total_clicks"]
+    print("our link has been followed", dict_count, "times")
+    return clicks_count
+a = "bitly.is/44UfyKP"
+count_clicks(token, a)
 
-is_bitlink(a, token)
+# def is_bitlink(url, token):
+#     url = f"https://api-ssl.bitly.com/v4/bitlinks/{url}"
+#     headers = {
+#         "Authorization": token,
+#     }
+#     response = requests.get(url, headers=headers)
+#     response.raise_for_status()
+#     print(response.text)
+# a = 'bitly.is/44UfyKP'
+#
+# is_bitlink(a, token)
 
 
 
@@ -25,8 +44,50 @@ is_bitlink(a, token)
 # https://bit.ly/3KuFXqv
 
 
-# from urllib.parse import urlparse
+
+
+
+
+
 #
-# url = 'https://bit.ly/3KuFXqv'
-# parsed = urlparse(url)
-# print(parsed.netloc+parsed.path)
+# load_dotenv()
+# token = os.environ['TOKEN']
+#
+#
+# def shorten_link(token, url):
+#     payload = {
+#         # "group_guid": "Bn82bpRqty3",
+#         "domain": "bit.ly",
+#         "long_url": url,
+#     }
+#
+#     headers = {
+#         "Authorization": token
+#     }
+#
+#     url = "https://api-ssl.bitly.com/v4/shorten"
+#     response = requests.post(url, json=payload, headers=headers)
+#     response.raise_for_status()
+#     bitlink = response.json()['link']
+#     return bitlink
+#
+#
+# print("Enter your link: ")
+#
+# user_link = input()
+# url = user_link
+# bitlink = shorten_link(token, url)
+# print("Битлинк -", bitlink)
+
+
+
+
+
+
+
+
+
+
+
+
+# pip freeze > requirements.txt
