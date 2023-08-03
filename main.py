@@ -1,3 +1,5 @@
+import json
+
 import requests
 token = "Bearer a649aa3e3ce528d1d3f42b594cbff90731a0d0ba"
 
@@ -27,7 +29,7 @@ try:
     print('Битлинк -', bitlink)
 except requests.exceptions.HTTPError:
     print('Bad link')
-'''https://bit.ly/3KMO1TV - bit.ly/3KMO1TV'''
+
 
 def count_clicks(token, link):
     url = f'https://api-ssl.bitly.com/v4/bitlinks/{link}/clicks/summary'
@@ -36,22 +38,21 @@ def count_clicks(token, link):
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-    clicks_count = response.text#need take 3 key
+    clicks_count = response.text
+    print(clicks_count)
     return clicks_count
-print('Enter short link')
-user_short_link = input()
-link = user_short_link
-link_count = count_clicks(token,link )
-print('our link has been followed', link_count)
+print('Enter short link: ')
+try:
+    user_short_link = input()
+    link = user_short_link[8:]
+    link_count = count_clicks(token,link )
+    dict_count = json.loads(link_count)["total_clicks"]
+    print('our link has been followed', dict_count, 'times')
+except requests.exceptions.HTTPError:
+    print('Bad link')
 
 
 
 
-# bitlink = url.format("bit.ly/43Sloer")
-# params = {"unit": "day", }
-
-
-
-# your link has been followed four times
 # # if __name__ == '__main__':
 # #     main()
