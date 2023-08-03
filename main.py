@@ -1,7 +1,9 @@
 import json
-
 import requests
+from urllib.parse import urlparse
+
 token = "Bearer a649aa3e3ce528d1d3f42b594cbff90731a0d0ba"
+
 
 def shorten_link(token, url):
     payload = {
@@ -21,6 +23,7 @@ def shorten_link(token, url):
     bitlink = response.json()['link']
     return bitlink
 
+
 print('Enter your link: ')
 try:
     user_link = input()
@@ -39,20 +42,23 @@ def count_clicks(token, link):
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     clicks_count = response.text
-    print(clicks_count)
     return clicks_count
+
+
 print('Enter short link: ')
 try:
     user_short_link = input()
-    link = user_short_link[8:]
-    link_count = count_clicks(token,link )
+    parsed = urlparse(user_short_link)
+    link = parsed.netloc + parsed.path
+    link_count = count_clicks(token, link)
     dict_count = json.loads(link_count)["total_clicks"]
     print('our link has been followed', dict_count, 'times')
 except requests.exceptions.HTTPError:
     print('Bad link')
 
+# def is_bitlink(url)
 
 
 
-# # if __name__ == '__main__':
-# #     main()
+# if __name__ == '__main__':
+#     main()
