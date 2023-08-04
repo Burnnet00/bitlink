@@ -4,14 +4,12 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 import os
 
-
 load_dotenv()
-token = os.environ['TOKEN']
+token = os.environ['BIT_TOKEN']
 
 
 def shorten_link(token, url):
     payload = {
-        # "group_guid": "Bn82bpRqty3",
         "domain": "bit.ly",
         "long_url": url,
     }
@@ -28,6 +26,7 @@ def shorten_link(token, url):
     print("Битлинк -", bitlink)
     return bitlink
 
+
 def count_clicks(token, link):
     url = f"https://api-ssl.bitly.com/v4/bitlinks/{link}/clicks/summary"
     headers = {
@@ -40,31 +39,26 @@ def count_clicks(token, link):
     print("our link has been followed", dict_count, "times")
     return clicks_count
 
+
+def print_count_click():
+    return
+
+
 def is_bitlink(url):
     parsed = urlparse(url)
     hostname = parsed.netloc
     path_host = parsed.netloc + parsed.path
     if hostname == "bit.ly":
-        count_clicks(token,path_host)
+        count_clicks(token, path_host)
     else:
         shorten_link(token, url)
 
-print("Enter your link: ")
-try:
-    user_link = input()
-    is_bitlink(user_link)
 
-except requests.exceptions.HTTPError:
-    print("Bad link")
+if __name__ == '__main__':
+    print("Enter your link: ")
+    try:
+        user_link = input()
+        is_bitlink(user_link)
 
-# print("Enter link: ")
-# user_link = input()
-# is_bitlink(user_link)
-
-# https://dev.bitly.com/docs/tutorials/shorten-customize-links/
-# https://bitly.is/44UfyKP
-
-
-
-# if __name__ == '__main__':
-#     main()
+    except requests.exceptions.HTTPError:
+        print("Bad link")
