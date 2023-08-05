@@ -32,12 +32,12 @@ def count_clicks(token, link):
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     clicks_count = response.json()["total_clicks"]
-    print("our link has been followed", clicks_count, "times")
+    print("Our link has been followed", clicks_count, "times")
     return clicks_count
+
 
 def is_bitlink(url):
     split_url = split_domain_path(url)
-    print(split_url)
     headers = {
         "Authorization": f"Bearer {token}",
     }
@@ -46,9 +46,6 @@ def is_bitlink(url):
     status_code = response.status_code
     return status_code
 
-
-# https://python-scripts.com/json
-# https://bit.ly/3QkQvwd
 
 def split_domain_path(url):
     parsed = urlparse(url)
@@ -67,6 +64,7 @@ if __name__ == '__main__':
             count_clicks(token, user_link)
         else:
             shorten_link(token, user_link)
+
 
 
     except requests.exceptions.HTTPError:
