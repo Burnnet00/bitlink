@@ -24,7 +24,8 @@ def shorten_link(token, url):
 
 
 def count_clicks(token, link):
-    url = f"https://api-ssl.bitly.com/v4/bitlinks/{link}/clicks/summary"
+    split_link = split_domain_path(link)
+    url = f"https://api-ssl.bitly.com/v4/bitlinks/{split_link}/clicks/summary"
     headers = {
         "Authorization": f"Bearer {token}",
     }
@@ -34,17 +35,6 @@ def count_clicks(token, link):
     print("our link has been followed", clicks_count, "times")
     return clicks_count
 
-
-# def is_bitlink(url):
-#     parsed = urlparse(url)
-#     hostname = parsed.netloc
-#     path_host = f"{parsed.netloc}{parsed.path}"
-#     if hostname == "bit.ly":
-#         count_clicks(token, path_host)
-#     else:
-#         shorten_link(token, url)
-
-
 def is_bitlink(url):
     split_url = split_domain_path(url)
     print(split_url)
@@ -53,7 +43,9 @@ def is_bitlink(url):
     }
     endpoint = f"https://api-ssl.bitly.com/v4/bitlinks/{split_url}"
     response = requests.get(endpoint, headers=headers)
-    print(response.status_code)
+    status_code = response.status_code
+    return status_code
+
 
 # https://python-scripts.com/json
 # https://bit.ly/3QkQvwd
@@ -63,13 +55,19 @@ def split_domain_path(url):
     domain_path = f"{parsed.netloc}{parsed.path}"
     return domain_path
 
+
 if __name__ == '__main__':
     load_dotenv()
     token = os.environ['BITLY_TOKEN']
     print("Enter your link: ")
     try:
         user_link = input()
-        is_bitlink(user_link)
+        check_url = is_bitlink(user_link)
+        if check_url == 200:
+            count_clicks(token, user_link)
+        else:
+            shorten_link(token, user_link)
+
 
     except requests.exceptions.HTTPError:
         print("Bad link")
