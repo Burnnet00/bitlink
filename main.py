@@ -1,4 +1,3 @@
-import json
 import requests
 from urllib.parse import urlparse
 from dotenv import load_dotenv
@@ -12,7 +11,7 @@ def shorten_link(token, url):
     }
 
     headers = {
-        "Authorization": token,
+        "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
     }
 
@@ -27,24 +26,19 @@ def shorten_link(token, url):
 def count_clicks(token, link):
     url = f"https://api-ssl.bitly.com/v4/bitlinks/{link}/clicks/summary"
     headers = {
-        "Authorization": token,
+        "Authorization": f"Bearer {token}",
     }
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-    clicks_count = response.text
-    dict_count = json.loads(clicks_count)["total_clicks"]
-    print("our link has been followed", dict_count, "times")
+    clicks_count = response.json()["total_clicks"]
+    print("our link has been followed", clicks_count, "times")
     return clicks_count
-
-
-def print_count_click():
-    return
 
 
 def is_bitlink(url):
     parsed = urlparse(url)
     hostname = parsed.netloc
-    path_host = parsed.netloc + parsed.path
+    path_host = f"{parsed.netloc}{parsed.path}"
     if hostname == "bit.ly":
         count_clicks(token, path_host)
     else:
