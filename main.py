@@ -4,10 +4,6 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-token = os.environ['BIT_TOKEN']
-
-
 def shorten_link(token, url):
     payload = {
         "domain": "bit.ly",
@@ -55,6 +51,8 @@ def is_bitlink(url):
 
 
 if __name__ == '__main__':
+    load_dotenv()
+    token = os.environ['BIT_TOKEN']
     print("Enter your link: ")
     try:
         user_link = input()
