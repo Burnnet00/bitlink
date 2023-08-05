@@ -6,7 +6,6 @@ import os
 
 def shorten_link(token, url):
     payload = {
-        "domain": "bit.ly",
         "long_url": url,
     }
 
@@ -21,7 +20,6 @@ def shorten_link(token, url):
     global bitlink 
     bitlink = response.json()['link']
     return bitlink
-
 
 
 def count_clicks(token, link):
@@ -68,7 +66,6 @@ if __name__ == '__main__':
         else:
             shorten_link(token, user_link)
             print(f"Битлинк - {bitlink}")
-            
 
 
 

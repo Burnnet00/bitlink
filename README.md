@@ -12,17 +12,16 @@ and is_bitlink to determine the type of link.
 
 
 To get the token you need to register at (https://app.bitly.com)
-Then go to the settings/api (https://app.bitly.com/settings/api/) and generate a token using your password,
-and enter the received token into the program in the token field.
+Then go to the settings/api (https://app.bitly.com/settings/api/) and generate a token using your password.
 Python3 should already be installed. Use pip (or pip3, if there is a conflict with Python2) to install dependencies:
 
 ```
 pip install -r requirements.txt
 ```
-Enter your token:
+Then create a constant BITLY_TOKEN in the ".env " file and enter your generated token there:
 
 ```
-token = "****************************************"
+BITLY_TOKEN = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 Run the program and enter your link - the program will give you bitlink. If you enter a bitlink, 
