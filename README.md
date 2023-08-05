@@ -19,6 +19,12 @@ Python3 should already be installed. Use pip (or pip3, if there is a conflict wi
 ```
 pip install -r requirements.txt
 ```
+Enter your token:
+
+```
+token = "****************************************"
+```
+
 Run the program and enter your link - the program will give you bitlink. If you enter a bitlink, 
 the program will show you the number of clicks on it.
 
