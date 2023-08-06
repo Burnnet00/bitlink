@@ -11,13 +11,13 @@ def shorten_link(token, url):
 
     headers = {
         "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json"
     }
 
     url = "https://api-ssl.bitly.com/v4/shorten"
     response = requests.post(url, json=payload, headers=headers)
     response.raise_for_status()
     bitlink = response.json()['link']
+    print(bitlink)
     return bitlink
 
 
@@ -40,22 +40,20 @@ def is_bitlink(url):
     }
     endpoint = f"https://api-ssl.bitly.com/v4/bitlinks/{split_url}"
     response = requests.get(endpoint, headers=headers)
-    status_code = response.status_code
-    return status_code
+    return response.status_code
 
 
 def split_domain_path(url):
-    parsed = urlparse(url)
-    domain_path = f"{parsed.netloc}{parsed.path}"
+    parsed_user_url = urlparse(url)
+    domain_path = f"{parsed_user_url.netloc}{parsed_user_url.path}"
     return domain_path
 
 
 if __name__ == '__main__':
     load_dotenv()
     token = os.environ['BITLY_TOKEN']
-    print("Enter your link: ")
     try:
-        user_link = input()
+        user_link = input("Enter your link: ")
         check_url = is_bitlink(user_link)
         if check_url == 200:
             count_clicks(token, user_link)
