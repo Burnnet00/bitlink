@@ -17,7 +17,6 @@ def shorten_link(token, url):
     response = requests.post(url, json=payload, headers=headers)
     response.raise_for_status()
     bitlink = response.json()['link']
-    print(bitlink)
     return bitlink
 
 
@@ -68,3 +67,4 @@ if __name__ == '__main__':
 
     except requests.exceptions.HTTPError:
         print("Bad link")
+

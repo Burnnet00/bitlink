@@ -21,7 +21,7 @@ pip install -r requirements.txt
 Then create a constant BITLY_TOKEN in the ".env " file and enter your generated token there:
 
 ```
-BITLY_TOKEN = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+BITLY_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 Run the program and enter your link - the program will give you bitlink. If you enter a bitlink, 
