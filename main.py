@@ -55,12 +55,10 @@ if __name__ == '__main__':
         user_link = input("Enter your link: ")
         check_url = is_bitlink(user_link)
         if check_url == 200:
-            count_clicks(token, user_link)
             clicks_count = count_clicks(token, user_link)
             print(f"Our link has been followed {clicks_count} times")
 
         else:
-            shorten_link(token, user_link)
             bitlink = shorten_link(token, user_link)
             print(f"Битлинк - {bitlink}")
 
