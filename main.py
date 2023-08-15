@@ -54,6 +54,7 @@ if __name__ == '__main__':
     try:
         user_link = input("Enter your link: ")
         check_url = is_bitlink(user_link)
+
         if check_url == 200:
             clicks_count = count_clicks(token, user_link)
             print(f"Our link has been followed {clicks_count} times")
@@ -65,4 +66,3 @@ if __name__ == '__main__':
 
     except requests.exceptions.HTTPError:
         print("Bad link")
-
